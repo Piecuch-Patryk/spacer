@@ -1,5 +1,7 @@
 <template>
-  <div :style="style" class="item"></div>
+  <li class="item">
+    <img :src="this.photo" :alt="this.title">
+  </li>
 </template>
 
 <script>
@@ -17,25 +19,16 @@ export default {
       title: this.item.data[0].title,
     };
   },
-  computed: {
-    style() {
-      return `background-image: url("${this.photo}")`;
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .item {
-    width: 300px;
-    height: 300px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+  .item img {
+    max-width: 300px;
     border-radius: 5px;
     transition: transform .2s ease-in-out;
   }
-  .item:hover {
+  .item img:hover {
     cursor: pointer;
     transform: scale(1.1);
   }

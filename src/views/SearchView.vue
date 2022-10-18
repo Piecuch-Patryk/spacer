@@ -5,9 +5,9 @@
     </transition>
     <Claim v-if="step === 0" />
     <SearchInput :value="searchValue" @input="handleInput" :dark="step === 1" />
-    <div class="results" v-if="results && !loading && step === 1">
+    <ul class="results" v-if="results && !loading && step === 1">
       <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" />
-    </div>
+    </ul>
   </div>
 </template>
 
@@ -76,9 +76,7 @@ export default {
   }
 
   .results {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
+    list-style: none;
     margin-top: 20px;
   }
 </style>
