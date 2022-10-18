@@ -52,6 +52,7 @@ export default {
     height: 30px;
     border: 0;
     width: 100%;
+    font-size: 20px;
     text-align: center;
     color: #ddd;
     background: none;
