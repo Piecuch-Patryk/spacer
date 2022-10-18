@@ -2,6 +2,12 @@
   <div class="hero-image"></div>
 </template>
 
+<script>
+export default {
+  name: 'HeroImage',
+};
+</script>
+
 <style lang="scss" scoped>
   .hero-image {
     position: absolute;

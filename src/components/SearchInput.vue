@@ -6,25 +6,26 @@
         name="search"
         type="text"
         placeholder="mars"
-        :searchValue="searchValue"
-        @input="handleChange"
+        :class="{ dark }"
+        :value="value"
+        @input="handleInput"
       />
     </label>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'SearchInput',
   props: {
-    searchValue: {
+    value: {
       type: String,
       required: true,
     },
-  },
-  methods: {
-    handleChange(e) {
-      this.$emit('input', e.target.value);
+    dark: {
+      type: Boolean,
+      dafault: false,
     },
   },
 };
@@ -65,6 +66,19 @@ export default {
   input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: #ddd;
+  }
+
+  .dark {
+    color: #333;
+    border-bottom-color: #333;
+
+    &::placeholder {
+      color: #333;
+    }
+
+    &:focus {
+      -webkit-text-fill-color: #333;
+    }
   }
 }
 </style>
