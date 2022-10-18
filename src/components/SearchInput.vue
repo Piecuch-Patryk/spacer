@@ -1,42 +1,31 @@
 <template>
-<div class="search-wrapper">
-  <label for="search">
-    <input
-      id="search"
-      name="search"
-      type="text"
-      placeholder="mars"
-      v-model="searchValue"
-      @input="handleInput"
-    />
-  </label>
-</div>
+  <div class="search-wrapper">
+    <label for="search">
+      <input
+        id="search"
+        name="search"
+        type="text"
+        placeholder="mars"
+        :searchValue="searchValue"
+        @input="handleChange"
+      />
+    </label>
+  </div>
 </template>
 
 <script>
-import axios from 'axios';
-import debounce from 'lodash.debounce';
-
-const API = 'https://images-api.nasa.gov/';
-
 export default {
   name: 'SearchInput',
-  data() {
-    return {
-      searchValue: '',
-      results: [],
-    };
+  props: {
+    searchValue: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
-    handleInput: debounce(function () {
-      axios.get(`${API}search?q=${this.searchValue}&media_type=image`)
-        .then((response) => {
-          this.results = response.data.collection.items;
-      })
-        .catch((error) => {
-        console.log(error);
-      });
-    }, 500),
+    handleChange(e) {
+      this.$emit('input', e.target.value);
+    },
   },
 };
 
@@ -57,13 +46,14 @@ export default {
     color: #ddd;
     background: none;
     border-bottom: 1px solid #ddd;
+    transition: box-shadow .3s ease-in-out;
 
     &::placeholder {
       color: #ddd;
     }
     &:focus {
       outline: none;
-      background: none;
+      box-shadow: 0 10px 20px -8px rgba(255,255,255,.3);
     }
     &:active {
       background: none;
