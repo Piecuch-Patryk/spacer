@@ -6,8 +6,10 @@
     <Claim v-if="step === 0" />
     <SearchInput :value="searchValue" @input="handleInput" :dark="step === 1" />
     <div class="results" v-if="results && !loading && step === 1">
-      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" />
+      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id" @click="handleModalOpen(item)" />
     </div>
+    <div class="loader" v-if="step === 1 && loading" />
+    <Modal v-if="modalOpen" :item="modalItem" @close-modal="modalOpen = false" />
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import HeroImage from '@/components/HeroImage.vue';
 import Claim from '@/components/Claim.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import Item from '@/components/Item.vue';
+import Modal from '@/components/Modal.vue';
 
 const API = 'https://images-api.nasa.gov/';
 
@@ -25,6 +28,8 @@ export default {
   name: 'SearchView',
   data() {
     return {
+      modalItem: null,
+      modalOpen: false,
       loading: false,
       step: 0,
       searchValue: '',
@@ -32,6 +37,10 @@ export default {
     };
   },
   methods: {
+    handleModalOpen(item) {
+      this.modalOpen = true;
+      this.modalItem = item;
+    },
     handleInput: debounce(function (e) {
       this.searchValue = e.target.value;
       this.loading = true;
@@ -51,6 +60,7 @@ export default {
     SearchInput,
     HeroImage,
     Item,
+    Modal,
 },
 };
 </script>
@@ -74,11 +84,58 @@ export default {
     justify-content: start;
     margin-top: 30px;
   }
+  .loader {
+    margin-top: 100px;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+
+    @media (min-width: 768px) {
+      width: 90px;
+      height: 90px;
+    }
+  }
+  .loader::after {
+    content: " ";
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid #333;
+    border-color: #333 transparent #333 transparent;
+    animation: loading 1s linear infinite;
+
+    @media (min-width: 768px) {
+      width: 90px;
+      height: 90px;
+    }
+  }
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
   .results {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
+
+    @media (min-width: 410px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
   }
 </style>

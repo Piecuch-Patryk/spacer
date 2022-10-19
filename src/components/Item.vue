@@ -27,13 +27,25 @@ export default {
 
 <style lang="scss" scoped>
   .item {
-    width: 300px;
+    width:90vw;
     height: 300px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     border-radius: 5px;
     transition: transform .2s ease-in-out;
+
+    @media (min-width: 410px) {
+      width: 40vw;
+    }
+
+    @media (min-width: 768px) {
+      width: 30vw;
+    }
+
+    @media (min-width: 1024px) {
+      width: 20vw;
+    }
   }
   .item:hover {
     cursor: pointer;
